@@ -1,0 +1,41 @@
+{
+  "name": "@chinaso2018/vue-preview",
+  "version": "1.0.0",
+  "description": "vue images preview based on photoswipe",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "rollup -c --environment BUILD:production",
+    "build:min": "rollup -c --environment BUILD:production-min",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinaso2018/vue-preview.git"
+  },
+  "keywords": [
+    "vue",
+    "image",
+    "preview",
+    "photoswipe"
+  ],
+  "author": "zhouyuying@chinaso.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chinaso2018/vue-preview/issues"
+  },
+  "devDependencies": {
+    "vue": "^2.6.10",
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "rollup": "^1.11.3",
+    "rollup-plugin-babel": "^3.0.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-uglify": "^6.0.2"
+  },
+  "homepage": "https://github.com/chinaso2018/vue-preview#readme"
+}

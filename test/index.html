@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title></title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../dist/index.js"></script>
+    <style>
+        body{
+            height:1000px;
+            -ms-touch-action: none;
+            touch-action: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <pictures-preview swipe-attr="aaa">
+            <ul>
+                <li v-for="item in items">
+                    <img :src="item.src" :large="item.realsrc" :aaa="true" style="width:100px;">
+                </li>
+            </ul>
+        </pictures-preview>
+
+        <button  @click="first = !first">fasd</button>
+    </div>
+    
+</body>
+
+<script>
+    Vue.use(picturesPreview, {
+        dbZoomRatio: 2
+    })
+
+    new Vue({
+        el: '#app',
+        data: {
+            src: 'https://placekitten.com/600/400',
+            items: [
+                {
+                    src: 'https://placekitten.com/600/400',
+                },
+                {
+                    src: 'https://placekitten.com/1200/900',
+                },
+                {
+                    src: 'http://www.hxen.com/d/file/p/2019/05/fea58b3cc1442f4253e14e8bd2ac6fe8.jpg',
+                }
+            ]
+        }   
+    })
+
+
+</script>
+<script>
+
+</script>
+</html>
