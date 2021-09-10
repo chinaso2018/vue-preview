@@ -4,7 +4,13 @@
   (global = global || self, global.picturesPreview = factory());
 }(this, (function () { 'use strict';
 
-  var photoSwipeCss = "\n/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */\n/*\n\tStyles for basic PhotoSwipe functionality (sliding area, open/close transitions)\n*/\n/* pswp = photoswipe */\n.pswp {\n  display: none;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -ms-touch-action: none;\n  touch-action: none;\n  z-index: 1500;\n  -webkit-text-size-adjust: 100%;\n  /* create separate layer, to avoid paint on window.onscroll in webkit/blink */\n  -webkit-backface-visibility: hidden;\n  outline: none; }\n  .pswp * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box; }\n  .pswp img {\n    max-width: none; }\n\n/* style is added when JS option showHideOpacity is set to true */\n.pswp--animate_opacity {\n  /* 0.001, because opacity:0 doesn't trigger Paint action, which causes lag at start of transition */\n  opacity: 0.001;\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--open {\n  display: block; }\n\n.pswp--zoom-allowed .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-zoom-in;\n  cursor: -moz-zoom-in;\n  cursor: zoom-in; }\n\n.pswp--zoomed-in .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grab;\n  cursor: -moz-grab;\n  cursor: grab; }\n\n.pswp--dragging .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grabbing;\n  cursor: -moz-grabbing;\n  cursor: grabbing; }\n\n/*\n\tBackground is added as a separate element.\n\tAs animating opacity is much faster than animating rgba() background-color.\n*/\n.pswp__bg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background: #000;\n  opacity: 0;\n  -webkit-transform: translateZ(0);\n          transform: translateZ(0);\n  -webkit-backface-visibility: hidden;\n  will-change: opacity; }\n\n.pswp__scroll-wrap {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -ms-touch-action: none;\n  touch-action: none;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0; }\n\n/* Prevent selection and tap highlights */\n.pswp__container,\n.pswp__img {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none; }\n\n.pswp__zoom-wrap {\n  position: absolute;\n  width: 100%;\n  -webkit-transform-origin: left top;\n  -ms-transform-origin: left top;\n  transform-origin: left top;\n  /* for open/close transition */\n  -webkit-transition: -webkit-transform 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp__bg {\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--animated-in .pswp__bg,\n.pswp--animated-in .pswp__zoom-wrap {\n  -webkit-transition: none;\n  transition: none; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -webkit-backface-visibility: hidden; }\n\n.pswp__item {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  overflow: hidden; }\n\n.pswp__img {\n  position: absolute;\n  width: auto;\n  height: auto;\n  top: 0;\n  left: 0; }\n\n/*\n\tstretched thumbnail or div placeholder element (see below)\n\tstyle is added to avoid flickering in webkit/blink when layers overlap\n*/\n.pswp__img--placeholder {\n  -webkit-backface-visibility: hidden; }\n\n/*\n\tdiv element that matches size of large image\n\tlarge image loads on top of it\n*/\n.pswp__img--placeholder--blank {\n  background: #222; }\n\n.pswp--ie .pswp__img {\n  width: 100% !important;\n  height: auto !important;\n  left: 0;\n  top: 0; }\n\n/*\n\tError message appears when image is not loaded\n\t(JS option errorMsg controls markup)\n*/\n.pswp__error-msg {\n  position: absolute;\n  left: 0;\n  top: 50%;\n  width: 100%;\n  text-align: center;\n  font-size: 14px;\n  line-height: 16px;\n  margin-top: -8px;\n  color: #CCC; }\n\n.pswp__error-msg a {\n  color: #CCC;\n  text-decoration: underline; }\n\n.pswp_extends_close{\n  position:absolute;\n  right:1.25rem;\n  top:1.25rem;\n  width:2.25rem;\n  height:2.25rem;\n  background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAAaVBMVEUAAAD4+Pi7u7tnZ2cyMjLIyMj+/v5HcEz8/Pz////////f39////////9PT090dHT///+EhIQPDw/////t7e3////////////Z2dmmpqb////////T09OlpaWUlJT///////+xsbH///8vlG3yAAAAInRSTlNM5ZtpWKj0AO770MRxs2FwBXZPCtlYHje7i2NCtIt/koiUBwkSmwAAAtVJREFUWMOtmNm2qyAMQKNCD1pxHlo7+/8feSVQWxVQe8mLazlsM5EE4M8ibffkkcfCkHkRf3at7V0wPWhifuhncuBxsw9U1jzstRLyutwMKmPWW4TF5SZQ9sGwI72lCSkKkqQ3evzcj7N1UBuptys/gJkEfqUeRu0KKHsot9IFRbGoCsEjs4EaqQ6jBAxSAKHSxKgxgy7ybycjRgo5Sa0vJlCNIfdyWJXcw1So9aAOOUcCG4QckdTpQFIfHzaKH051GkEXfHCGzXLGDy5zUCP8HN5hh9wF6dBMQRnG/Qa7BHWKsgnoscs/o58wM79BLcYLdgvGrv2A0DCP7AcRbzQOQbEA5/CD5OLL+A0qxeI5wU8iVgsrFUgoxMhvIMKUSqAUovCjUKXSAKpFXi0U0mt49uf3icjkGkFcoxCp+ipZFqMh3NX8nlCJC1Aj8jPQpJqXaDh9P1cpEGurGUDC1fPfwK3XkLCeLV6FCt0NaJmvz1lvouhVB1fa8wF00Fj2NoMF6xy07fAHYpkxXZVHQ1j6HWYtB0CkTwudabkW128SnSs4c0MHT3M2IumQjwXDwMGfPIFbChp9k/ypmZoQcxAVJAUr6f7Ci/GtVNQSEBUlsdfAMBxN1EoiwoAuJyvV1M4BgoEXfyssq/uF7c7aXwrxwiroLke31yrIblqRvwdJf800u7MlZ6WZS2dbw58i53XHC7WH35aQKVOq5FaSTEjLEgnYaJIkXW1LxLhoFYd+K3e1LFpTGYHEm5gjSafCWEYMhU1xrnMFj4WpsBlK7YIzfODpR413qY2NFX3exiX8bCr+2nZEtGYgyTe1I22DFL/RuCMZ+ibRBJ+bWzbx9XPpsrV/WrazIeJ/xprie6xxN2g5G/3cDaPOxmN3A7vaQpz3cXRbCGebGnfbLHcbP3dbUXebY3fb9S0HCLDpAMHdkYa7QxaHxz7uDqIcHo05PKz74fjwH7t7pGX0+GcxAAAAAElFTkSuQmCC');\n  background-size:100% 100%;\n  background-repeat:no-repeat;\n}\n";
+  /**
+   * @Author: zhouyuying
+   * @Date:   2021-09-10 14:25:04
+   * @Last Modified by:   zhouyuying
+   * @Last Modified time: 2021-09-10 14:27:40
+   */
+  var photoSwipeCss = "\n/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */\n/*\n\tStyles for basic PhotoSwipe functionality (sliding area, open/close transitions)\n*/\n/* pswp = photoswipe */\n.pswp {\n  display: none;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -ms-touch-action: none;\n  touch-action: none;\n  z-index: 1500;\n  -webkit-text-size-adjust: 100%;\n  /* create separate layer, to avoid paint on window.onscroll in webkit/blink */\n  -webkit-backface-visibility: hidden;\n  outline: none; }\n  .pswp * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box; }\n  .pswp img {\n    max-width: none; }\n\n/* style is added when JS option showHideOpacity is set to true */\n.pswp--animate_opacity {\n  /* 0.001, because opacity:0 doesn't trigger Paint action, which causes lag at start of transition */\n  opacity: 0.001;\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--open {\n  display: block; }\n\n.pswp--zoom-allowed .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-zoom-in;\n  cursor: -moz-zoom-in;\n  cursor: zoom-in; }\n\n.pswp--zoomed-in .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grab;\n  cursor: -moz-grab;\n  cursor: grab; }\n\n.pswp--dragging .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grabbing;\n  cursor: -moz-grabbing;\n  cursor: grabbing; }\n\n/*disable download img*/\n.pswp.disableDownload img{\n  -webkit-touch-callout: none;\n  pointer-events: none;\n}\n/*\n\tBackground is added as a separate element.\n\tAs animating opacity is much faster than animating rgba() background-color.\n*/\n.pswp__bg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background: #000;\n  opacity: 0;\n  -webkit-transform: translateZ(0);\n          transform: translateZ(0);\n  -webkit-backface-visibility: hidden;\n  will-change: opacity; }\n\n.pswp__scroll-wrap {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -ms-touch-action: none;\n  touch-action: none;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0; }\n\n/* Prevent selection and tap highlights */\n.pswp__container,\n.pswp__img {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none; }\n\n.pswp__zoom-wrap {\n  position: absolute;\n  width: 100%;\n  -webkit-transform-origin: left top;\n  -ms-transform-origin: left top;\n  transform-origin: left top;\n  /* for open/close transition */\n  -webkit-transition: -webkit-transform 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp__bg {\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--animated-in .pswp__bg,\n.pswp--animated-in .pswp__zoom-wrap {\n  -webkit-transition: none;\n  transition: none; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -webkit-backface-visibility: hidden; }\n\n.pswp__item {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  overflow: hidden; }\n\n.pswp__img {\n  position: absolute;\n  width: auto;\n  height: auto;\n  top: 0;\n  left: 0; }\n\n/*\n\tstretched thumbnail or div placeholder element (see below)\n\tstyle is added to avoid flickering in webkit/blink when layers overlap\n*/\n.pswp__img--placeholder {\n  -webkit-backface-visibility: hidden; }\n\n/*\n\tdiv element that matches size of large image\n\tlarge image loads on top of it\n*/\n.pswp__img--placeholder--blank {\n  background: #222; }\n\n.pswp--ie .pswp__img {\n  width: 100% !important;\n  height: auto !important;\n  left: 0;\n  top: 0; }\n\n/*\n\tError message appears when image is not loaded\n\t(JS option errorMsg controls markup)\n*/\n.pswp__error-msg {\n  position: absolute;\n  left: 0;\n  top: 50%;\n  width: 100%;\n  text-align: center;\n  font-size: 14px;\n  line-height: 16px;\n  margin-top: -8px;\n  color: #CCC; }\n\n.pswp__error-msg a {\n  color: #CCC;\n  text-decoration: underline; }\n\n.pswp_extends_close{\n  position:absolute;\n  right:1.25rem;\n  top:1.25rem;\n  width:2.25rem;\n  height:2.25rem;\n  background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAAaVBMVEUAAAD4+Pi7u7tnZ2cyMjLIyMj+/v5HcEz8/Pz////////f39////////9PT090dHT///+EhIQPDw/////t7e3////////////Z2dmmpqb////////T09OlpaWUlJT///////+xsbH///8vlG3yAAAAInRSTlNM5ZtpWKj0AO770MRxs2FwBXZPCtlYHje7i2NCtIt/koiUBwkSmwAAAtVJREFUWMOtmNm2qyAMQKNCD1pxHlo7+/8feSVQWxVQe8mLazlsM5EE4M8ibffkkcfCkHkRf3at7V0wPWhifuhncuBxsw9U1jzstRLyutwMKmPWW4TF5SZQ9sGwI72lCSkKkqQ3evzcj7N1UBuptys/gJkEfqUeRu0KKHsot9IFRbGoCsEjs4EaqQ6jBAxSAKHSxKgxgy7ybycjRgo5Sa0vJlCNIfdyWJXcw1So9aAOOUcCG4QckdTpQFIfHzaKH051GkEXfHCGzXLGDy5zUCP8HN5hh9wF6dBMQRnG/Qa7BHWKsgnoscs/o58wM79BLcYLdgvGrv2A0DCP7AcRbzQOQbEA5/CD5OLL+A0qxeI5wU8iVgsrFUgoxMhvIMKUSqAUovCjUKXSAKpFXi0U0mt49uf3icjkGkFcoxCp+ipZFqMh3NX8nlCJC1Aj8jPQpJqXaDh9P1cpEGurGUDC1fPfwK3XkLCeLV6FCt0NaJmvz1lvouhVB1fa8wF00Fj2NoMF6xy07fAHYpkxXZVHQ1j6HWYtB0CkTwudabkW128SnSs4c0MHT3M2IumQjwXDwMGfPIFbChp9k/ypmZoQcxAVJAUr6f7Ci/GtVNQSEBUlsdfAMBxN1EoiwoAuJyvV1M4BgoEXfyssq/uF7c7aXwrxwiroLke31yrIblqRvwdJf800u7MlZ6WZS2dbw58i53XHC7WH35aQKVOq5FaSTEjLEgnYaJIkXW1LxLhoFYd+K3e1LFpTGYHEm5gjSafCWEYMhU1xrnMFj4WpsBlK7YIzfODpR413qY2NFX3exiX8bCr+2nZEtGYgyTe1I22DFL/RuCMZ+ibRBJ+bWzbx9XPpsrV/WrazIeJ/xprie6xxN2g5G/3cDaPOxmN3A7vaQpz3cXRbCGebGnfbLHcbP3dbUXebY3fb9S0HCLDpAMHdkYa7QxaHxz7uDqIcHo05PKz74fjwH7t7pGX0+GcxAAAAAElFTkSuQmCC');\n  background-size:100% 100%;\n  background-repeat:no-repeat;\n}\n";
 
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
@@ -3598,6 +3604,12 @@
   	framework.extend(self, publicMethods);
   };
 
+  /**
+   * @Author: zhouyuying
+   * @Date:   2021-09-10 14:25:04
+   * @Last Modified by:   zhouyuying
+   * @Last Modified time: 2021-09-10 14:28:03
+   */
   var img = document.createElement('img');
 
   var supportNaturalWidth = img.naturalWidth !== undefined && img.naturalWidth !== null;
@@ -3605,10 +3617,14 @@
 
   var utils = {
     on: function on(elm, eventName, fn) {
-      elm.addEventListener(eventName, fn, false);
+      var useCapture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+      elm.addEventListener(eventName, fn, useCapture);
     },
     off: function off(elm, eventName, fn) {
-      elm.removeEventListener(eventName, fn, false);
+      var useCapture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+      elm.removeEventListener(eventName, fn, useCapture);
     },
     getAttr: function getAttr(elm, attr) {
       return elm.getAttribute(attr);
@@ -3693,29 +3709,38 @@
     }
   };
 
+  /**
+   * @Author: zhouyuying
+   * @Date:   1985-10-26 16:15:00
+   * @Last Modified by:   zhouyuying
+   * @Last Modified time: 2021-09-10 14:29:06
+   */
+
   function installCss() {
     var style = document.createElement('style');
     style.innerText = photoSwipeCss;
     document.body.appendChild(style);
   }
 
-  function createPswpElm() {
+  function createPswpElm(disableDownload) {
     installCss();
     var elm = document.createElement('div');
-    elm.innerHTML = '\n      <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">\n          <div class="pswp__bg"></div>\n          <div class="pswp__scroll-wrap">\n              <div class="pswp__container">\n                  <div class="pswp__item"></div>\n                  <div class="pswp__item"></div>\n                  <div class="pswp__item"></div>\n              </div>\n              <div class="pswp_extends_close"></div>\n          </div>\n      </div>\n    ';
+    var extendClassName = disableDownload ? 'disableDownload' : '';
+    elm.innerHTML = '\n       <div class="pswp ' + extendClassName + '" tabindex="-1" role="dialog" aria-hidden="true">\n           <div class="pswp__bg"></div>\n           <div class="pswp__scroll-wrap">\n               <div class="pswp__container">\n                   <div class="pswp__item"></div>\n                   <div class="pswp__item"></div>\n                   <div class="pswp__item"></div>\n               </div>\n               <div class="pswp_extends_close"></div>\n           </div>\n       </div>\n     ';
     return elm.firstElementChild;
   }
 
   var VuePhotoSwipe = function () {
-    function VuePhotoSwipe(clickElm, comOptions, options) {
+    function VuePhotoSwipe(clickElm, comOptions, options, useCapture, disableDownload) {
       classCallCheck(this, VuePhotoSwipe);
 
       this.clickElm = clickElm;
       this.swipeAttr = comOptions.swipeAttr;
       this.realAddress = comOptions.realAddress;
       this.options = options;
-      this.pswpElm =  createPswpElm();
-
+      this.pswpElm =  createPswpElm(disableDownload);
+      this.useCapture = useCapture;
+      this.disableDownload = disableDownload;
       this.init();
     }
 
@@ -3724,7 +3749,7 @@
       value: function init() {
         this.clickFnBind = this.clickFn.bind(this);
         this.closeFnbind = this.closeFn.bind(this);
-        utils.on(this.clickElm, 'click', this.clickFnBind);
+        utils.on(this.clickElm, 'click', this.clickFnBind, this.useCapture);
       }
     }, {
       key: 'closeFn',
@@ -3741,6 +3766,10 @@
         var _this = this;
 
         var target = event.target;
+        //TODO:优化
+        if (this.useCapture) {
+          target = target.firstChild;
+        }
         if (!utils.isComplianceImg(target, this.swipeAttr)) {
           return;
         }
@@ -3779,7 +3808,7 @@
     }, {
       key: 'unbind',
       value: function unbind() {
-        utils.off(this.clickElm, 'click', this.clickFnBind);
+        utils.off(this.clickElm, 'click', this.clickFnBind, this.useCapture);
       }
     }]);
     return VuePhotoSwipe;
@@ -3800,6 +3829,14 @@
         realAddress: {
           type: String,
           default: 'large'
+        },
+        useCapture: {
+          type: Boolean,
+          default: false
+        },
+        disableDownload: {
+          type: Boolean,
+          default: false
         },
         previewOptions: {
           type: Object,
@@ -3835,7 +3872,7 @@
             this.vuePhoto = new VuePhotoSwipe(this.curImgWrapElm, {
               swipeAttr: this.swipeAttr,
               realAddress: this.realAddress
-            }, options);
+            }, options, this.useCapture, this.disableDownload);
           }
         },
         unbind: function unbind() {

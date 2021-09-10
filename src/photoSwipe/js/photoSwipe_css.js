@@ -1,4 +1,9 @@
-
+/**
+ * @Author: zhouyuying
+ * @Date:   2021-09-10 14:25:04
+ * @Last Modified by:   zhouyuying
+ * @Last Modified time: 2021-09-10 14:27:40
+ */
 const photoSwipeCss = `
 /*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */
 /*
@@ -56,6 +61,11 @@ const photoSwipeCss = `
   cursor: -moz-grabbing;
   cursor: grabbing; }
 
+/*disable download img*/
+.pswp.disableDownload img{
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
 /*
 	Background is added as a separate element.
 	As animating opacity is much faster than animating rgba() background-color.
